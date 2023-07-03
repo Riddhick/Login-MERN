@@ -1,11 +1,24 @@
 import React from "react";
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import "./styles.css"
 
+
+const router=createBrowserRouter([
+    {
+        path:'/',
+        element: <div>Root Route</div>
+    },
+    {
+        path:'/register',
+        element:<div>Register Route</div>
+    }
+])
 
 function App(){
     return (
-        <div>
-            <h1 className="text-3xl font-bold underline">Hello World</h1>
-        </div>
+        <main>
+        <RouterProvider router={router}></RouterProvider>
+        </main>
     )
 }
 

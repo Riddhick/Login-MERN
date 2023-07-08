@@ -1,7 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import styles from './Styles/Username.module.css';
+import styles from '../Styles/Username.module.css';
+import avatar from '../Assets/avatar.png';
 
  const Username=()=>{
     return(
@@ -16,7 +17,7 @@ import styles from './Styles/Username.module.css';
                     </div>
                     <div className="py-1">
                         <div className="profile flex justify-center py-4">
-                            <img src="" alt="avatar"></img>
+                            <img className={styles.profile_img} src={avatar} alt="avatar"></img>
                         </div>
 
                         <div className="{textbox flex flex-col items-center gap-6">

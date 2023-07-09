@@ -1,10 +1,27 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useFormik} from "formik";
 
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
+import { Uservalidation } from "../schema/uservalidation";
+
+
+const initialValues={
+    Username:""
+};
 
  const Username=()=>{
+    
+    const {values,errors,touched,handleChange,handleSubmit}=useFormik({
+        initialValues:initialValues,
+        validationSchema:Uservalidation,
+        onSubmit:(values)=>{
+            console.log(values)
+        }
+    })
+
+
     return(
         <div className="container mx-auto">
             <div className="flex justify-center items-center h-screen">
@@ -15,20 +32,21 @@ import avatar from '../Assets/avatar.png';
                             Explore more by connecting with us
                         </span>
                     </div>
-                    <div className="py-1">
+                    <form className="py-1" onSubmit={handleSubmit}>
                         <div className="profile flex justify-center py-4">
                             <img className={styles.profile_img} src={avatar} alt="avatar"></img>
                         </div>
 
                         <div className="{textbox flex flex-col items-center gap-6">
-                            <input className={styles.textbox} type="text" placeholder="Username" />
+                            <input className={styles.textbox} value={values.Username} type="text" placeholder="Username" name="Username" onChange={handleChange}/>
+                            {errors.Username && touched.Username ?(<p className="py-4 text-red-400 text-center w-2/3">{errors.Username}</p>):null }
                             <button className={styles.btn} type="submit">Let's Go</button>
                         </div>
 
                         <div className="text-center py-4">
                             <span className="text-gray-500">Not a member?<Link className="text-red-500" to="/register">Register Now</Link></span>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

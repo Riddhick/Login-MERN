@@ -20,7 +20,15 @@ export default function Register(){
             initialValues:initialValues,
             validationSchema:RegistrationValidation,
             onSubmit:(values)=>{
-                console.log(values)
+                fetch('http://localhost:3001/api/register',{
+                    method:'POST',
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(values)
+                }).then(
+                    console.log(values)
+                )
             }
         })
     

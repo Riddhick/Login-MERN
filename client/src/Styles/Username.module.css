@@ -1,5 +1,5 @@
 .btn{
-    @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-200
+    @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-200 ;
 }
 
 .btn:hover{
@@ -7,7 +7,7 @@
 }
 
 .textbox{
-    @apply border-gray-100 px-5 py-4 w-3/4 rounded-xl shadow-sm text-lg bg-gray-300;
+    @apply border-gray-100 px-5 py-4 w-3/4 rounded-xl shadow-sm text-lg bg-gray-300 h-7;
     @apply focus:outline-none; 
 }
 
@@ -17,7 +17,7 @@
     box-shadow: 0 4px 30px #4747470b;
     backdrop-filter: blur(7.1px);
     border:1px solid rgba(255,255,255,.3);
-    @apply border-4 border-gray-100 shrink-0 h-3/4 w-[30%] rounded-3xl py-20 px-7 min-w-max;
+    @apply border-4 border-gray-100 shrink-0 h-3/4 w-[30%] rounded-3xl py-10 px-7 min-w-max;
  }
 
  .profile_img{

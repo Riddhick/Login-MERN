@@ -1,11 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useFormik} from 'formik';
+import { useState } from "react";
 
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
 
 import {RegistrationValidation} from "../schema/uservalidation";
+import convertToBase64 from "../helper/convert";
 
 const initialValues={
     Username:"",
@@ -15,11 +17,18 @@ const initialValues={
 
 
 export default function Register(){
-  
+        const [file,setFile]=useState()
+
+        const onUpload = async e =>{
+            const base64=await convertToBase64(e.target.files[0]);
+            setFile(base64)
+        }
+
         const {values,errors,touched,handleChange,handleSubmit} =useFormik({
             initialValues:initialValues,
             validationSchema:RegistrationValidation,
-            onSubmit:(values)=>{
+            onSubmit:async values=>{
+                values=await Object.assign(values,{profile: file || ''})
                 fetch('http://localhost:3001/api/register',{
                     method:'POST',
                     headers:{
@@ -45,9 +54,11 @@ export default function Register(){
                     </div>
                     <form className="py-1" onSubmit={handleSubmit}>
                         <div className="profile flex justify-center py-4">
-                            <img className={styles.profile_img} src={avatar} alt="avatar"></img>
+                            <label htmlFor="profile">
+                            <img className={styles.profile_img} src={file || avatar} alt="avatar"></img>
+                            </label>
+                            <input type="file" id="profile" name="profile" onChange={onUpload}/>
                         </div>
-
                         <div className="{textbox flex flex-col items-center gap-5">
                             <input className={styles.textbox} values={values.Username} type="text" placeholder="Username" name="Username" onChange={handleChange}/>
                             <input className={styles.textbox} type="email" values={values.Email} placeholder="Email" name="Email" onChange={handleChange}/>

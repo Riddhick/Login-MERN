@@ -23,3 +23,7 @@
  .profile_img{
     @apply border-4 border-gray-200 rounded-full w-[80px] shadow-lg cursor-pointer h-[80px];
  }
+
+ input[type='file']{
+    display: none;
+ }

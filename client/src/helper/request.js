@@ -1,16 +1,15 @@
 export function register(values){
-    fetch('http://localhost:3001/api/register',{
+   const response= fetch('http://localhost:3001/api/register',{
                     method:'POST',
                     headers:{
                         "Content-type":"application/json"
                     },
                     body:JSON.stringify(values)
-                }).then(()=>{
-                    console.log(values)
-                    const url="http://localhost:3000/"
-                    window.location.assign(url)
-                }
-                    
-                )
+                })
+
+   console.log(response.status) 
+   if(response.ok){
+    window.location.assign("http://localhost:3000")
+   }            
 }
 

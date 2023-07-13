@@ -29,15 +29,6 @@ async function register(req,res){
             .then(result=>res.status(201).send({msg:"New User"}))
             .catch(error=>res.status(500).send({error}))
       })
-     /* const User= new Usermodel({
-         Username,
-         Password:hashedPassword,
-         Email,
-         Profile:Profile ||""
-      });
-      User.save()
-         .then(result=>res.status(201).send({msg:"New User"}))
-         .catch(error=>res.status(500).send({error}))*/
    }
    catch(error){
       return res.status(500).send(error)
@@ -45,5 +36,26 @@ async function register(req,res){
 }
 
 
+async function login(req,res){
+   try{
+         const {Username, Password}=req.body;
+         const findUser=await Usermodel.findOne({Username})
 
-module.exports=register;
+         if(findUser){
+            const match=bcrypt.compare(Password,findUser.Password)
+            if(match){
+               return res.status(201).send({msg:"Password Matched"})
+            }
+            else{
+                return res.staus(500).send({Error:"Password not matched"})  
+            }
+         }
+         return res.status(500).send({Error:"User Does not exist"})
+   }
+   catch(error){
+      return res.status(500).send(error)
+   }
+}
+
+
+module.exports={register,login};

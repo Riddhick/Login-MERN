@@ -8,6 +8,7 @@ import avatar from '../Assets/avatar.png';
 
 import {RegistrationValidation} from "../schema/uservalidation";
 import convertToBase64 from "../helper/convert";
+import {register} from "../helper/request";
 
 const initialValues={
     Username:"",
@@ -29,15 +30,8 @@ export default function Register(){
             validationSchema:RegistrationValidation,
             onSubmit:async values=>{
                 values=await Object.assign(values,{profile: file || ''})
-                fetch('http://localhost:3001/api/register',{
-                    method:'POST',
-                    headers:{
-                        "Content-type":"application/json"
-                    },
-                    body:JSON.stringify(values)
-                }).then(
-                    console.log(values)
-                )
+                register(values)
+                
             }
         })
     

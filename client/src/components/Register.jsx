@@ -19,7 +19,7 @@ const initialValues={
 
 export default function Register(){
         const [file,setFile]=useState()
-
+        var status
         const onUpload = async e =>{
             const base64=await convertToBase64(e.target.files[0]);
             setFile(base64)
@@ -30,8 +30,8 @@ export default function Register(){
             validationSchema:RegistrationValidation,
             onSubmit:async values=>{
                 values=await Object.assign(values,{profile: file || ''})
-                register(values)  
-               // console.log(status.json())
+                status=await register(values)  
+                console.log(typeof(status))
                 
             }
         })
@@ -62,7 +62,6 @@ export default function Register(){
                             {errors.Username && touched.Username ?(<p className="py-0 text-red-400 text-center">{errors.Username}</p>):null }
                             {errors.Email && touched.Email ?(<p className="py-0 text-red-400 text-center">{errors.Email}</p>):null }
                             {errors.Password && touched.Password ?(<p className="py-0 text-red-400 text-center">{errors.Password}</p>):null }
-                        
                             </span>
                             <button className={styles.btn} type="submit">Let's Go</button>
                         </div>

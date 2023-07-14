@@ -1,5 +1,6 @@
-export function register(values){
-   fetch('http://localhost:3001/api/register',{
+export async function register(values){
+    var statusCode
+   await fetch('http://localhost:3001/api/register',{
                     method:'POST',
                     headers:{
                         "Content-type":"application/json"
@@ -7,9 +8,9 @@ export function register(values){
                     body:JSON.stringify(values)
                 })
                 .then((response)=>{
-                    const errCode=response.status
-                    console.log(errCode)
+                    statusCode=response.status
+                    console.log(statusCode)
                 })
-    
+    return statusCode
 }
 

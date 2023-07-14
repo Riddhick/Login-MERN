@@ -2,6 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {useFormik} from 'formik';
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
@@ -19,7 +21,7 @@ const initialValues={
 
 export default function Register(){
         const [file,setFile]=useState()
-        var status
+
         const onUpload = async e =>{
             const base64=await convertToBase64(e.target.files[0]);
             setFile(base64)
@@ -30,15 +32,40 @@ export default function Register(){
             validationSchema:RegistrationValidation,
             onSubmit:async values=>{
                 values=await Object.assign(values,{profile: file || ''})
-                status=await register(values)  
-                console.log(typeof(status))
-                
+                const status=await register(values)  
+                //console.log(typeof(status))
+                if(status===201){
+                    toast.success(' Registration Done!', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+               
+                }
+                if(status===500){
+                    toast.error('User Already Registered', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                }
             }
         })
     
 
     return(
         <div className="container mx-auto">
+            <ToastContainer/>
             <div className="flex justify-center items-center h-screen">
                 <div className={styles.glass}>
                     <div className="title flex flex-col items-center">
@@ -62,6 +89,7 @@ export default function Register(){
                             {errors.Username && touched.Username ?(<p className="py-0 text-red-400 text-center">{errors.Username}</p>):null }
                             {errors.Email && touched.Email ?(<p className="py-0 text-red-400 text-center">{errors.Email}</p>):null }
                             {errors.Password && touched.Password ?(<p className="py-0 text-red-400 text-center">{errors.Password}</p>):null }
+
                             </span>
                             <button className={styles.btn} type="submit">Let's Go</button>
                         </div>

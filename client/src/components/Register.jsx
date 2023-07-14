@@ -30,7 +30,8 @@ export default function Register(){
             validationSchema:RegistrationValidation,
             onSubmit:async values=>{
                 values=await Object.assign(values,{profile: file || ''})
-                register(values)
+                register(values)  
+               // console.log(status.json())
                 
             }
         })
@@ -61,6 +62,7 @@ export default function Register(){
                             {errors.Username && touched.Username ?(<p className="py-0 text-red-400 text-center">{errors.Username}</p>):null }
                             {errors.Email && touched.Email ?(<p className="py-0 text-red-400 text-center">{errors.Email}</p>):null }
                             {errors.Password && touched.Password ?(<p className="py-0 text-red-400 text-center">{errors.Password}</p>):null }
+                        
                             </span>
                             <button className={styles.btn} type="submit">Let's Go</button>
                         </div>

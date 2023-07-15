@@ -14,3 +14,7 @@ export async function register(values){
     return statusCode
 }
 
+export async function username(values){
+    console.log(values)
+}
+

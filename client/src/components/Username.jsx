@@ -5,6 +5,7 @@ import {useFormik} from "formik";
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
 import { Uservalidation } from "../schema/uservalidation";
+import {username} from "../helper/request";
 
 
 const initialValues={
@@ -17,7 +18,7 @@ const initialValues={
         initialValues:initialValues,
         validationSchema:Uservalidation,
         onSubmit:(values)=>{
-            console.log(values)
+            username(values)
         }
     })
 

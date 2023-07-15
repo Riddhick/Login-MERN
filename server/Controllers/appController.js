@@ -38,8 +38,8 @@ async function register(req,res){
 
 async function login(req,res){
    try{
-         const {Username, Password}=req.body;
-         const findUser=await Usermodel.findOne({Username})
+         const {Email, Password}=req.body;
+         const findUser=await Usermodel.findOne({Email})
 
          if(findUser){
             const match=bcrypt.compare(Password,findUser.Password)
@@ -50,7 +50,7 @@ async function login(req,res){
                 return res.staus(500).send({Error:"Password not matched"})  
             }
          }
-         return res.status(500).send({Error:"User Does not exist"})
+         return res.status(500).send({Error:"Wrong Email Id"})
    }
    catch(error){
       return res.status(500).send(error)
@@ -58,4 +58,26 @@ async function login(req,res){
 }
 
 
-module.exports={register,login};
+async function username(req,res){
+   try{
+      const {Username}=req.body;
+      await Usermodel.findOne({Username})
+         .then(user=>{
+            if(user!==null)
+               return res.status(201).send({msg:"User Found"})
+            else if(user===null)
+               return res.status(500).send({msg:"No User Found"})
+         })
+         .catch(()=>{
+            return res.status(500).send({msg:"Error"})
+         })
+      
+
+   }
+   catch(error){
+      return res.status(500).send({msg:"Failed to Conenct with database"})
+   }
+}
+
+
+module.exports={register,login,username};

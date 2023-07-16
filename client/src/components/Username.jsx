@@ -1,6 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useFormik} from "formik";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
@@ -12,19 +15,41 @@ const initialValues={
     Username:""
 };
 
+function changePage(){
+    window.location.assign("/profile")
+}
+
  const Username=()=>{
+    
     
     const {values,errors,touched,handleChange,handleSubmit}=useFormik({
         initialValues:initialValues,
         validationSchema:Uservalidation,
-        onSubmit:(values)=>{
-            username(values)
+        onSubmit:async (values)=>{
+            const status=await username(values)
+            //console.log(status)
+            if(status===500){
+                toast.error('No user found!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+            }
+            else if(status===201){
+               changePage()     
+            }
         }
     })
 
 
     return(
         <div className="container mx-auto">
+            <ToastContainer/>
             <div className="flex justify-center items-center h-screen">
                 <div className={styles.glass}>
                     <div className="title flex flex-col items-center">

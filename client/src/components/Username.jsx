@@ -1,5 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+import { useState } from "react";
 import {useFormik} from "formik";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,19 +16,26 @@ const initialValues={
     Username:""
 };
 
-function changePage(){
-    window.location.assign("/profile")
-}
-
  const Username=()=>{
+    const navigate=useNavigate()
+
+    const [details,setDetails]=useState([])
     
-    
+    function changePage(){
+        //var content=Object.values(details);
+        navigate("/profile",{state:details.Username})
+    }
+
     const {values,errors,touched,handleChange,handleSubmit}=useFormik({
         initialValues:initialValues,
         validationSchema:Uservalidation,
         onSubmit:async (values)=>{
-            const status=await username(values)
-            //console.log(status)
+            var status=await username(values)
+            //console.log(details)
+            details.Username=status.Username
+            details.Profile=status.Profile
+            status=201
+            setDetails(details)
             if(status===500){
                 toast.error('No user found!', {
                     position: "top-center",
@@ -41,7 +49,7 @@ function changePage(){
                     });
             }
             else if(status===201){
-               changePage()     
+              changePage()
             }
         }
     })

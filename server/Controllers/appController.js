@@ -64,7 +64,7 @@ async function username(req,res){
       await Usermodel.findOne({Username})
          .then(user=>{
             if(user!==null)
-               return res.status(201).send({msg:"User Found"})
+               return res.json(user)
             else if(user===null)
                return res.status(500).send({msg:"No User Found"})
          })

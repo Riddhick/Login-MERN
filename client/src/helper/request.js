@@ -25,7 +25,10 @@ export async function username(values){
         body:JSON.stringify(values)
     })
     .then((response)=>{
-        statusCode=response.status
+        if(response.status===200)
+            statusCode=response.json()
+        else
+            statusCode=response.status    
         //console.log(statusCode)
     })
     .catch((error)=>{

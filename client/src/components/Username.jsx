@@ -23,7 +23,7 @@ const initialValues={
     
     function changePage(){
         //var content=Object.values(details);
-        navigate("/profile",{state:details.Username})
+        navigate("/password",{state:details})
     }
 
     const {values,errors,touched,handleChange,handleSubmit}=useFormik({

@@ -31,7 +31,7 @@ export default function Register(){
             initialValues:initialValues,
             validationSchema:RegistrationValidation,
             onSubmit:async values=>{
-                values=await Object.assign(values,{profile: file || ''})
+                values=await Object.assign(values,{Profile: file || ''})
                 const status=await register(values)  
                 //console.log(typeof(status))
                 if(status===201){

@@ -4,7 +4,7 @@ import avatar from '../Assets/avatar.png';
 import { useFormik } from "formik";
 import {useLocation} from 'react-router-dom';
 import { LoginValidation } from "../schema/uservalidation";
-
+import {login} from "../helper/request";
 
 const initialValues={
     Email:"",
@@ -19,7 +19,8 @@ export default function Password(){
         initialValues:initialValues,
         validationSchema:LoginValidation,
         onSubmit:async values=>{
-            console.log(values)
+           const status=await login(values)
+            console.log(status)
         }
     })
 

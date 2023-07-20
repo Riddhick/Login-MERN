@@ -42,13 +42,10 @@ async function login(req,res){
          const findUser=await Usermodel.findOne({Email})
 
          if(findUser){
-            const match=bcrypt.compare(Password,findUser.Password)
-            if(match){
+            const match=await bcrypt.compare(Password,findUser.Password)
+            if(match)
                return res.status(201).send({msg:"Password Matched"})
-            }
-            else{
-                return res.staus(500).send({Error:"Password not matched"})  
-            }
+            return res.status(500).send({msg:"Failed to validate password"})                  
          }
          return res.status(500).send({Error:"Wrong Email Id"})
    }

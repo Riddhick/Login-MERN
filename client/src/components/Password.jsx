@@ -2,9 +2,12 @@ import React from "react";
 import styles from '../Styles/Username.module.css';
 import avatar from '../Assets/avatar.png';
 import { useFormik } from "formik";
-import {useLocation} from 'react-router-dom';
+import {useNavigate,useLocation,Link} from 'react-router-dom';
 import { LoginValidation } from "../schema/uservalidation";
 import {login} from "../helper/request";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const initialValues={
     Email:"",
@@ -14,18 +17,38 @@ const initialValues={
 
 export default function Password(){
     const location=useLocation()
+    const navigate=useNavigate()
+
+    function changePage(){
+        navigate("/profile",{state:location.state})
+    }
     
     const {values,errors,touched,handleChange,handleSubmit}=useFormik({
         initialValues:initialValues,
         validationSchema:LoginValidation,
         onSubmit:async values=>{
            const status=await login(values)
-            console.log(status)
+            if(status===201){
+                changePage()
+            }
+            else{
+                toast.error('Wrong Password', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+            }
         }
     })
 
     return(
         <div className="container mx-auto">
+        <ToastContainer />
         <div className="flex justify-center items-center h-screen">
             <div className={styles.glass}>
                 <div className="title flex flex-col items-center">
@@ -47,6 +70,9 @@ export default function Password(){
                         {errors.Password && touched.Password ?(<p className="py-0 text-red-400 text-center">{errors.Password}</p>):null }
                     </div>
                 </form>
+                <div className="text-center py-4">
+                            <span className="text-gray-500">Forgot Password?<Link className="text-red-500" to="/">Go Back </Link></span>
+                </div>
             </div>
         </div>
     </div>

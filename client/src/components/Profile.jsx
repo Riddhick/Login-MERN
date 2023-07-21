@@ -6,6 +6,6 @@ export default function Profile(){
     const location = useLocation();
    
     return(<div>
-       {location.state}
+       {location.state.Username}
     </div>)
 }

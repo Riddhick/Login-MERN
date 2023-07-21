@@ -56,7 +56,7 @@ const initialValues={
 
 
     return(
-        <div className="container mx-auto">
+        <div className=" w-screen mx-auto bg-theme-black ">
             <ToastContainer/>
             <div className="flex justify-center items-center h-screen">
                 <div className={styles.glass}>

@@ -69,9 +69,9 @@ export default function Register(){
             <div className="flex justify-center items-center h-screen">
                 <div className={styles.glass}>
                     <div className="title flex flex-col items-center">
-                        <h3 className="text-5xl font-bold">Hello User</h3>
+                        <h3 className="text-5xl font-bold">Registration</h3>
                         <span className="py-4 text-xl w-2/3 text-center text-grey-400">
-                            Explore more by connecting with us
+                            All fields are mandatory 
                         </span>
                     </div>
                     <form className="py-1" onSubmit={handleSubmit}>
